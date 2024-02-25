@@ -30,9 +30,9 @@ class ActionsController < ApplicationController
   def create
     @action = Action.new(action_params)
     if @action.save
-      render json: { message: '行動記録が保存されました' }, status: :created
+      redirect_to "/actions", notice: '行動記録が正常に保存されました。'
     else
-      render json: { error: '行動記録の保存に失敗しました' }, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -40,7 +40,7 @@ class ActionsController < ApplicationController
   private
 
   def action_params
-    params.require(:action).permit(:start_time, :end_time, :total_time)
+    params.require(:action).permit(:category, :start_time, :end_time, :day, :total_time)
   end
 
 end
