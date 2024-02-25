@@ -21,11 +21,6 @@ class ActionsController < ApplicationController
           backgroundColor: "#" + ("%06x" % (rand * 0xffffff))
         }
       end
-      # json化
-      @actions_json = @actions.to_json.html_safe
-      @categories_json = @categories.to_json.html_safe
-      @dates_json = @dates.to_json.html_safe
-      @datasets_json = @datasets.to_json.html_safe
   end
 
   def new
