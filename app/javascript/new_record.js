@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
       var startTime = new Date(startTimeField.value);
       var endTime = new Date(endTimeField.value);
-      var totalTime = (endTime - startTime) / 60; // 経過時間（秒）
+      var totalTime = (endTime - startTime) / 60; // 経過時間（分）
       totalTextField.value = totalTime.toFixed(2); // 経過時間を表示
       endButton.disabled = true;
     });
