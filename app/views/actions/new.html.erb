@@ -1,64 +1,16 @@
-<!-- app/views/actions/new.html.erb -->
 
-<%= button_to "Start", '#', id: 'startButton' %>
-<%= button_to "End", '#', id: 'endButton', disabled: true %>
-<p id="actionTime"></p>
 
-<script>
-  let startTime;
+<%= form_with(model: @action, local: true) do |form| %>
+  <%= form.label :category %>
+  <%= form.collection_select :category, Category.all, :category, :category, prompt: "Select Category" %>
 
-  document.getElementById('startButton').addEventListener('click', function() {
-    startTime = new Date();
-    document.getElementById('startButton').disabled = true;
-    document.getElementById('endButton').disabled = false;
-  });
+  <%= form.button "Start", type: "button", id: "start-button" %>
+  <%= form.button "End", type: "button", id: "end-button", disabled: true %>
 
-  document.getElementById('endButton').addEventListener('click', function() {
-    if (startTime) {
-      const endTime = new Date();
-      const actionTime = endTime - startTime;
+  <%= form.hidden_field :start_time, id: "start-time-field" %>
+  <%= form.hidden_field :end_time, id: "end-time-field" %>
+  <%= form.hidden_field :day, id: "day-field", value: Date.today %>
+  <%= form.hidden_field :total_time, id: "total-time-field" %>
 
-      // 開始時間と終了時間をhh:mm形式に整形
-      const formattedStartTime = formatTime(startTime);
-      const formattedEndTime = formatTime(endTime);
-
-      // Ajaxリクエストを送信してサーバーにデータを渡す
-      $.ajax({
-        type: 'POST',
-        url: '/actions',
-        data: {
-          action: {
-            start_time: formattedStartTime,
-            end_time: formattedEndTime,
-            total_time: actionTime,
-            // category: selected_categoty
-          }
-        },
-        success: function(response) {
-          // 成功時の処理
-          console.log('行動記録が保存されました');
-          // 表示用の要素に行動時間を表示
-          document.getElementById('actionTime').textContent = "行動時間: " + actionTime + "ミリ秒";
-        },
-        error: function(error) {
-          // エラー時の処理
-          console.error('行動記録の保存に失敗しました');
-        },
-        complete: function() {
-          // 終了時の共通処理
-          // 開始ボタンを有効化し、終了ボタンを無効化
-          document.getElementById('startButton').disabled = false;
-          document.getElementById('endButton').disabled = true;
-          startTime = null; // 初期化
-        }
-      });
-    }
-  });
-
-  // hh:mm形式に整形するユーティリティ関数
-  function formatTime(date) {
-    const hours = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
-    return `${hours}:${minutes}`;
-  }
-</script>
+  <%= form.submit %>
+<% end %>

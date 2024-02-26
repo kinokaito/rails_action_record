@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_20_131126) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_25_052954) do
   create_table "actions", force: :cascade do |t|
     t.time "start_time"
     t.time "end_time"
     t.string "category"
     t.date "day"
     t.integer "total_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "category"
+    t.string "display_color"
+    t.integer "category_total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
