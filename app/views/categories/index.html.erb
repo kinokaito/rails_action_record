@@ -1,0 +1,8 @@
+<h2>Category List</h2>
+
+<% @categories.each do |category| %>
+    <div>
+        <font color=<%= category.display_color %>>■</font>
+        <%= category.category %>
+    </div>
+<% end %>
