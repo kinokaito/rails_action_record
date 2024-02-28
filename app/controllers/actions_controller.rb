@@ -18,7 +18,7 @@ class ActionsController < ApplicationController
                                   .select { |action| action.category == category && action.day.to_s == date }
                                   .reduce(0) { |sum, action| sum + action.total_time }
           end,
-          backgroundColor: "#" + ("%06x" % (rand * 0xffffff))
+          backgroundColor: Category.find_by(category: category).display_color
         }
       end
   end
