@@ -31,7 +31,7 @@ class ActionsController < ApplicationController
     @action = Action.new(action_params)
     if @action.save
       update_category_total
-      redirect_to "/actions", notice: '行動記録が正常に保存されました。'
+      redirect_to actions_path, notice: '行動記録が正常に保存されました。'
     else
       render :new
     end
@@ -41,12 +41,12 @@ class ActionsController < ApplicationController
   private
 
   def action_params
-    params.require(:action).permit(:category, :start_time, :end_time, :day, :total_time)
+    params.permit(:category, :start_time, :end_time, :day, :total_time)
   end
 
   def update_category_total
-    category = Category.find_by(name: @action.category)
-    category.update(category_total: category.category_total + @action.total_time.to_i)
+    category = Category.find_by(category: @action.category)
+    category.update(category_total: category.category_total + @action.total_time)
   end
 
 end

@@ -1,16 +1,48 @@
 
-
-<%= form_with(model: @action, local: true) do |form| %>
+<%= form_with(url: {controller: 'actions', action: 'create' }, local: true) do |form| %>
   <%= form.label :category %>
   <%= form.collection_select :category, Category.all, :category, :category, prompt: "Select Category" %>
 
   <%= form.button "Start", type: "button", id: "start-button" %>
-  <%= form.button "End", type: "button", id: "end-button", disabled: true %>
 
-  <%= form.hidden_field :start_time, id: "start-time-field" %>
+
+  <%= form.text_field :start_time, id: "start-time-field", value: "start-time" %>
   <%= form.hidden_field :end_time, id: "end-time-field" %>
-  <%= form.hidden_field :day, id: "day-field", value: Date.today %>
+  <%= form.hidden_field :day, value: Date.today %>
   <%= form.hidden_field :total_time, id: "total-time-field" %>
 
-  <%= form.submit %>
+  <%= form.submit "End", id: "submit" %>
 <% end %>
+
+<script>
+  console.log("Hello from new.html.erb");
+  document.addEventListener("DOMContentLoaded", function() {
+      
+    var startTimeField = document.getElementById("start-time-field");
+    var endTimeField = document.getElementById("end-time-field");
+    var totalTextField = document.getElementById("total-time-field");
+
+    var startButton = document.getElementById("start-button");
+    var endSubmitButton = document.getElementById("submit");
+  
+    startButton.addEventListener("click", function() {
+      console.log("start clicked");
+      var currentTime = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+      startTimeField.value = currentTime;
+
+      startButton.disabled = true;
+      endButton.disabled = false;
+    });
+  
+    endSubmitButton.addEventListener("click", function() {
+      var currentTime = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
+      endTimeField.value = currentTime;
+  
+      var startTime = new Date(startTimeField.value);
+      var endTime = new Date(endTimeField.value);
+      var totalTime = (endTime - startTime) / 60000; // 経過時間（分）
+      totalTextField.value = totalTime.toFixed(2); // 経過時間を表示
+      endButton.disabled = true;
+    });
+  });
+</script>
