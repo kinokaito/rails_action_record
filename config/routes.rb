@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   post "/actions", to: "actions#create"
 
   get "/categories/index", to: "categories#index"
+  get "/categories/new", to: "categories#new"
+  post "/categories", to: "categories#create"
 end
