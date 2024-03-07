@@ -5,5 +5,6 @@
         <font color=<%= category.display_color %>>■</font>
         <%= category.category %>
         <%= category.category_total %>
+        <%= link_to "Edit", edit_category_path(category.id) %>
     </div>
 <% end %>
