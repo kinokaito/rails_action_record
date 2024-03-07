@@ -6,5 +6,20 @@
         <%= category.category %>
         <%= category.category_total %>
         <%= link_to "Edit", edit_category_path(category.id) %>
+        <%= button_to "Delete", category_path(category.id), method: :delete, form:{onSubmit: "return check()"} %>
     </div>
 <% end %>
+
+
+<script>
+function check(){
+    if(window.confirm('本当に削除しますか？')){ 
+        return true;
+    }
+    else{
+        window.alert('キャンセルされました'); 
+        return false; 
+    }
+}
+
+</script>
