@@ -1,0 +1,13 @@
+<%= form_with model: @category do |form| %>
+    <div>
+        Category
+        <%= form.text_field :category %>
+    </div>
+
+    <div>
+        Display Color
+        <input type="color" name="category[display_color]" id="category_display_color">
+    </div>
+
+    <%= form.submit %>
+<% end %>
